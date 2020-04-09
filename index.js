@@ -103,7 +103,7 @@ function App() {
               <TableCell>Name</TableCell>
               <TableCell align='right'>Mail</TableCell>
               <TableCell align='right'>Magnets</TableCell>
-              <TableCell align='right'>Commnet</TableCell>
+              {/* <TableCell align='right'>Commnet</TableCell> */}
               {loggedIn &&<TableCell align='right'>Give</TableCell>}
             </TableRow>
           </TableHead>
@@ -115,13 +115,13 @@ function App() {
                 </TableCell>
                 <TableCell align='right'>{padawan.email}</TableCell>
                 <TableCell align='right'>{padawan.magnets}</TableCell>
-                <TableCell align='right'>{padawan.comment}</TableCell> 
+                {/* <TableCell align='right'>{padawan.comment}</TableCell>  */}
                 {loggedIn && <TableCell align='right'><Button onClick={_=>{
                   let n = parseInt(prompt('Enter num of magnets'))
                   let c = prompt('Enter comment')
                   if(loggedIn && !isNaN(n))
                     users.child(padawan.id).child('magnets').set(padawan.magnets + n)
-                    users.child(padawan.id).child('comment').set(c)
+                    users.child(padawan.id).child('comment').set(c + '\n' + n + ' ' + c)
                 }} disabled={!loggedIn}>Give</Button></TableCell>}
               </TableRow>
             ))}
