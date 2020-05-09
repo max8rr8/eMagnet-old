@@ -10,6 +10,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
+const isDev = process.env.NODE_ENV == 'development'
+
 const firebaseConfig = {
   apiKey: 'AIzaSyBt8GFVcgi7Zm3bIYnMgf28C1LtWOVRFXc',
   authDomain: 'emagnet-725ed.firebaseapp.com',
@@ -108,7 +110,7 @@ function App() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {padawans.map((padawan) => (
+            {padawans.map((padawan) => ((padawan.email.split('@')[1] != 'example.com' || isDev) ?
               <TableRow key={padawan.email}>
                 <TableCell component='th' scope='row'>
                   {padawan.name}
@@ -123,8 +125,8 @@ function App() {
                     users.child(padawan.id).child('magnets').set(padawan.magnets + n)
                     users.child(padawan.id).child('comment').set(c + '\n' + n + ' ' + c)
                 }} disabled={!loggedIn}>Give</Button></TableCell>}
-              </TableRow>
-            ))}
+              </TableRow> : "")
+            )}
           </TableBody>
         </Table>
       </TableContainer>
