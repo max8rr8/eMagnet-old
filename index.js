@@ -10,7 +10,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
-const isDev = process.env.NODE_ENV == 'development'
+const isDev = process.env.NODE_ENV == 'development';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyBt8GFVcgi7Zm3bIYnMgf28C1LtWOVRFXc',
@@ -47,14 +47,14 @@ function App() {
   useEffect((_) => {
     let cb = (e) => {
       let f = e.val();
-      let res = []
-      for(let e in f){
+      let res = [];
+      for (let e in f) {
         res.push({
-          comment: '',magnets: 0,
+          comment: '',
+          magnets: 0,
           ...f[e],
           id: e,
-
-        })
+        });
       }
       setPadawans(res);
     };
@@ -78,7 +78,8 @@ function App() {
         </Button>
       ) : (
         'Trainer Obivan Kenobi'
-      )}{loggedIn && <br></br>}
+      )}
+      {loggedIn && <br></br>}
 
       {loggedIn && (
         <Button
@@ -90,7 +91,7 @@ function App() {
               name,
               email,
               magnets: 0,
-              commnet: ''
+              commnet: '',
             });
           }}
         >
@@ -105,27 +106,60 @@ function App() {
               <TableCell>Name</TableCell>
               <TableCell align='right'>Mail</TableCell>
               <TableCell align='right'>Magnets</TableCell>
-              {/* <TableCell align='right'>Commnet</TableCell> */}
-              {loggedIn &&<TableCell align='right'>Give</TableCell>}
+              <TableCell align='right'></TableCell>
+              <TableCell align='right'></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {padawans.map((padawan) => ((padawan.email.split('@')[1] != 'example.com' || isDev) ?
-              <TableRow key={padawan.email}>
-                <TableCell component='th' scope='row'>
-                  {padawan.name}
-                </TableCell>
-                <TableCell align='right'>{padawan.email}</TableCell>
-                <TableCell align='right'>{padawan.magnets}</TableCell>
-                {/* <TableCell align='right'>{padawan.comment}</TableCell>  */}
-                {loggedIn && <TableCell align='right'><Button onClick={_=>{
-                  let n = parseInt(prompt('Enter num of magnets'))
-                  let c = prompt('Enter comment')
-                  if(loggedIn && !isNaN(n))
-                    users.child(padawan.id).child('magnets').set(padawan.magnets + n)
-                    users.child(padawan.id).child('comment').set(c + '\n' + n + ' ' + c)
-                }} disabled={!loggedIn}>Give</Button></TableCell>}
-              </TableRow> : "")
+            {padawans.map((padawan) =>
+              padawan.email.split('@')[1] != 'example.com' || isDev ? (
+                <TableRow key={padawan.email}>
+                  <TableCell component='th' scope='row'>
+                    {padawan.name}
+                  </TableCell>
+                  <TableCell align='right'>{padawan.email}</TableCell>
+                  <TableCell align='right'>{padawan.magnets}</TableCell>
+                  {/* <TableCell align='right'>{padawan.comment}</TableCell>  */}
+                  {loggedIn && (
+                    <TableCell align='right'>
+                      <Button
+                        onClick={() => {
+                          let n = parseInt(prompt('Enter num of magnets'));
+                          let c = prompt('Enter comment');
+                          if (loggedIn && !isNaN(n))
+                            users
+                              .child(padawan.id)
+                              .child('magnets')
+                              .set(padawan.magnets + n);
+                          users
+                            .child(padawan.id)
+                            .child('comment')
+                            .set(c + '\n' + n + ' ' + c);
+                        }}
+                        disabled={!loggedIn}
+                      >
+                        Give
+                      </Button>
+                    </TableCell>
+                  )}
+
+                  {loggedIn && (
+                    <TableCell align='right'>
+                      <Button
+                        onClick={() => {
+                          console.log(padawan);
+                          users.child(padawan.id).remove();
+                        }}
+                        disabled={!loggedIn}
+                      >
+                        Remove
+                      </Button>
+                    </TableCell>
+                  )}
+                </TableRow>
+              ) : (
+                ''
+              )
             )}
           </TableBody>
         </Table>
