@@ -68,3 +68,7 @@ node_modules/
 # Parcel
 dist
 .cache
+
+# Package locks
+package-lock.json
+yarn.lock
