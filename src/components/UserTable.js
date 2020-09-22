@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
+import { useFirebaseDatabase } from 'fiery'
 import Button from '@material-ui/core/Button'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -9,25 +10,10 @@ import TableRow from '@material-ui/core/TableRow'
 import { usersRef } from '../firebase'
 
 export default function UserTable({ loggedIn }) {
-  let [users, setUsers] = useState([])
+  let usersState = useFirebaseDatabase(usersRef)
+  console.log(usersState)
 
-  useEffect(() => {
-    let cb = (e) => {
-      let usersVal = e.val()
-      let res = []
-      for (let id in usersVal) {
-        res.push({
-          comment: '',
-          magnets: 0,
-          ...usersVal[id],
-          id,
-        })
-      }
-      setUsers(res)
-    }
-    usersRef.on('value', cb)
-    return () => usersRef.off('value', cb)
-  })
+  if(usersState.loading) return <h1>LOADING</h1>
 
   const actions = [
     {
@@ -68,7 +54,7 @@ export default function UserTable({ loggedIn }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {users.map((user) => (
+          {Object.entries(usersState.data).map(([id, user]) => (
             <TableRow key={user.email}>
               <TableCell component="th" scope="row">
                 {user.name}
@@ -81,7 +67,7 @@ export default function UserTable({ loggedIn }) {
                   <TableCell align="right" key={action.name}>
                     <Button
                       onClick={() =>
-                        action.action(user, usersRef.child(user.id))
+                        action.action(user, usersRef.child(id))
                       }
                       disabled={!loggedIn}
                     >
