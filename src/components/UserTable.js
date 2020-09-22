@@ -13,8 +13,6 @@ export default function UserTable({ loggedIn }) {
   let usersState = useFirebaseDatabase(usersRef)
   console.log(usersState)
 
-  if(usersState.loading) return <h1>LOADING</h1>
-
   const actions = [
     {
       name: 'Give',
@@ -54,7 +52,7 @@ export default function UserTable({ loggedIn }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {Object.entries(usersState.data).map(([id, user]) => (
+          {Object.entries(usersState.unstable_read()).map(([id, user]) => (
             <TableRow key={user.email}>
               <TableCell component="th" scope="row">
                 {user.name}
@@ -66,9 +64,7 @@ export default function UserTable({ loggedIn }) {
                 .map((action) => (
                   <TableCell align="right" key={action.name}>
                     <Button
-                      onClick={() =>
-                        action.action(user, usersRef.child(id))
-                      }
+                      onClick={() => action.action(user, usersRef.child(id))}
                       disabled={!loggedIn}
                     >
                       {action.name}
