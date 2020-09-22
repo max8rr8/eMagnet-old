@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react'
-import { useLocalStorage } from '../useLocalStorage'
+import { useLocalStorage } from '../hooks/useLocalStorage'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 

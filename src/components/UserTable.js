@@ -1,5 +1,5 @@
 import React from 'react'
-import { useFirebaseDatabase } from 'fiery'
+import { useFirebaseDatabase } from '../hooks/useFirebasDatabse'
 import Button from '@material-ui/core/Button'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -52,7 +52,7 @@ export default function UserTable({ loggedIn }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {Object.entries(usersState.unstable_read()).map(([id, user]) => (
+          {Object.entries(usersState.data).map(([id, user]) => (
             <TableRow key={user.email}>
               <TableCell component="th" scope="row">
                 {user.name}
