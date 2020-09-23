@@ -43,6 +43,22 @@ export class FirebaseDatabaseEntry {
       })
     })
   }
+
+  read() {
+    return {
+      ready: this.resolved,
+      data: this.lastValue
+    }
+  }
+
+  serialize() {
+    return this.read()
+  }
+
+  deserialize(ob) {
+    this.lastValue = ob.data;
+    this.resolved = ob.ready;
+  }
 }
 
 export class FirebaseDatabaseProvider {
@@ -74,6 +90,24 @@ export class FirebaseDatabaseProvider {
 
   wait(ref) {
     return this.getEntry(ref).wait()
+  }
+
+  serialize() {
+    let res = {}
+
+    this.cache.forEach((v, k)=>{
+      res[k] = v.serialize()
+    })
+
+    return JSON.stringify(res)
+  }
+
+  deserialize(db, ob) {
+    Object.entries(ob).forEach(([path, value])=>{
+      let entry = new FirebaseDatabaseEntry(db.ref(path))
+      entry.deserialize(value)
+      this.cache.set(path, entry)
+    })
   }
 }
 
