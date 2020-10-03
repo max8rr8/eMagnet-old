@@ -12,6 +12,9 @@
   "license": "ISC",
   "dependencies": {
     "@material-ui/core": "^4.9.8",
+    "eslint-config-xo-react": "^0.23.0",
+    "eslint-plugin-react": "^7.21.2",
+    "eslint-plugin-react-hooks": "^4.1.2",
     "fiery": "^0.5.0",
     "firebase": "^7.13.2",
     "firebase-admin": "^9.2.0",
@@ -20,7 +23,8 @@
     "react": "^0.0.0-experimental-94c0244ba",
     "react-async-ssr": "^0.7.2",
     "react-dom": "^0.0.0-experimental-94c0244ba",
-    "webpack-merge": "^5.1.4"
+    "webpack-merge": "^5.1.4",
+    "xo": "^0.33.1"
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",
@@ -30,5 +34,42 @@
     "html-webpack-plugin": "^4.5.0",
     "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12"
+  },
+  "xo": {
+    "extends": "xo-react",
+    "space": true,
+    "semi": false,
+    "prettier": true,
+    "env": [
+      "node",
+      "browser"
+    ],
+    "rules": {
+      "import/no-unassigned-import": 0,
+      "unicorn/filename-case": [
+        "error",
+        {
+          "cases": {
+            "camelCase": true,
+            "pascalCase": true
+          }
+        }
+      ],
+      "react/function-component-definition": [
+        "error",
+        {
+          "namedComponents": "function-declaration"
+        }
+      ],
+      "no-alert": 0,
+    "react/prop-types": 0
+    }
+  },
+  "prettier": {
+    "tabWidth": 2,
+    "semi": false,
+    "singleQuote": true,
+    "bracketSpacing": true,
+    "trailingComma": "none"
   }
 }

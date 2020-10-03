@@ -6,16 +6,16 @@ export default function AddUser() {
   return (
     <Button
       variant="contained"
-      onClick={(e) => {
-        let name = prompt('Enter padawan name')
+      onClick={() => {
+        const name = prompt('Enter padawan name')
         if (!name) return
-        let email = prompt('Enter padawan email')
+        const email = prompt('Enter padawan email')
         if (!email) return
         usersRef.push({
           name,
           email,
           magnets: 0,
-          commnet: '',
+          commnet: ''
         })
       }}
     >

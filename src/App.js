@@ -6,7 +6,7 @@ import AddUser from './components/AddUser'
 import GlobalLoading from './components/GlobaLoading'
 
 export default function App() {
-  let [loggedIn, setLoggedIn] = useState(false)
+  const [loggedIn, setLoggedIn] = useState(false)
 
   return (
     <Suspense fallback={<GlobalLoading />}>

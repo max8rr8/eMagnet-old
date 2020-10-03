@@ -3,15 +3,15 @@ import React from 'react'
 import { ServerStyleSheets } from '@material-ui/core/styles'
 import {
   FirebaseDatabaseContext,
-  FirebaseDatabaseProvider,
+  FirebaseDatabaseProvider
 } from './hooks/useFirebasDatabse'
 import { renderToStringAsync } from 'react-async-ssr'
 import App from './App'
 
-export const app = functions.https.onRequest(async (req, res) => {
-  let styles = new ServerStyleSheets()
-  let db = new FirebaseDatabaseProvider()
-  let appHtml = await renderToStringAsync(
+export const app = functions.https.onRequest(async (request, response) => {
+  const styles = new ServerStyleSheets()
+  const db = new FirebaseDatabaseProvider()
+  const appHtml = await renderToStringAsync(
     styles.collect(
       <FirebaseDatabaseContext.Provider value={db}>
         <App />
@@ -19,7 +19,7 @@ export const app = functions.https.onRequest(async (req, res) => {
     )
   )
 
-  let html = `
+  const html = `
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -35,6 +35,6 @@ export const app = functions.https.onRequest(async (req, res) => {
     </body>
     </html>
   `
-  res.contentType = 'text/html'
-  res.end(html)
+  response.contentType = 'text/html'
+  response.end(html)
 })

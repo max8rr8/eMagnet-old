@@ -10,7 +10,7 @@ import TableRow from '@material-ui/core/TableRow'
 import { usersRef } from '../firebase'
 
 export default function UserTable({ loggedIn }) {
-  let usersState = useFirebaseDatabase(usersRef)
+  const usersState = useFirebaseDatabase(usersRef)
   console.log(usersState)
 
   const actions = [
@@ -18,22 +18,27 @@ export default function UserTable({ loggedIn }) {
       name: 'Give',
       requiresLogin: true,
       action(user, userRef) {
-        let n = parseInt(prompt('Enter num of magnets'))
-        let c = prompt('Enter comment')
+        const numberOfMagnets = Number.parseInt(
+          prompt('Enter num of magnets'),
+          10
+        )
+        const comment = prompt('Enter comment')
 
-        if (loggedIn && !isNaN(n)) {
-          userRef.child('magnets').set(user.magnets + n)
-          userRef.child('comment').set(`${user.comment}\n${n} ${c}`)
+        if (loggedIn && !Number.isNaN(numberOfMagnets)) {
+          userRef.child('magnets').set(user.magnets + numberOfMagnets)
+          userRef
+            .child('comment')
+            .set(`${user.comment}\n${numberOfMagnets} ${comment}`)
         }
-      },
+      }
     },
     {
       name: 'Remove',
       requiresLogin: true,
       action(user, userRef) {
         userRef.remove()
-      },
-    },
+      }
+    }
   ]
 
   return (
@@ -47,7 +52,7 @@ export default function UserTable({ loggedIn }) {
             {actions
               .filter((action) => !action.requiresLogin || loggedIn)
               .map((action) => (
-                <TableCell align="right" key={action.name}></TableCell>
+                <TableCell key={action.name} align="right" />
               ))}
           </TableRow>
         </TableHead>
@@ -62,10 +67,10 @@ export default function UserTable({ loggedIn }) {
               {actions
                 .filter((action) => !action.requiresLogin || loggedIn)
                 .map((action) => (
-                  <TableCell align="right" key={action.name}>
+                  <TableCell key={action.name} align="right">
                     <Button
-                      onClick={() => action.action(user, usersRef.child(id))}
                       disabled={!loggedIn}
+                      onClick={() => action.action(user, usersRef.child(id))}
                     >
                       {action.name}
                     </Button>

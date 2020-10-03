@@ -1,8 +1,7 @@
 import firebase from 'firebase/app'
 import 'firebase/database'
 
-
-const isDev = process.env.NODE_ENV == 'development'
+const isDev = process.env.NODE_ENV === 'development'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyBt8GFVcgi7Zm3bIYnMgf28C1LtWOVRFXc',
@@ -13,7 +12,7 @@ const firebaseConfig = {
   projectId: 'emagnet-725ed',
   storageBucket: 'emagnet-725ed.appspot.com',
   messagingSenderId: '481420905815',
-  appId: '1:481420905815:web:aedba870845cbec1008212',
+  appId: '1:481420905815:web:aedba870845cbec1008212'
 }
 
 firebase.initializeApp(firebaseConfig)
