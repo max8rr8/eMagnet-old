@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "@material-ui/core": "^4.9.8",
+    "@material-ui/icons": "^4.9.1",
     "eslint-config-xo-react": "^0.23.0",
     "eslint-plugin-react": "^7.21.2",
     "eslint-plugin-react-hooks": "^4.1.2",
@@ -62,7 +63,7 @@
         }
       ],
       "no-alert": 0,
-    "react/prop-types": 0
+      "react/prop-types": 0
     }
   },
   "prettier": {

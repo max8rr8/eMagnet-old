@@ -9,7 +9,7 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import { usersRef } from '../firebase'
 
-export default function UserTable({ loggedIn }) {
+export default function UserTable({ loggedIn, className }) {
   const usersState = useFirebaseDatabase(usersRef)
   console.log(usersState)
 
@@ -42,7 +42,7 @@ export default function UserTable({ loggedIn }) {
   ]
 
   return (
-    <TableContainer>
+    <TableContainer className={className}>
       <Table aria-label="users">
         <TableHead>
           <TableRow>

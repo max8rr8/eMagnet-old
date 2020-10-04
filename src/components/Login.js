@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { useLocalStorage } from '../hooks/useLocalStorage'
 import Button from '@material-ui/core/Button'
-import Typography from '@material-ui/core/Typography'
 
 const isDev = process.env.NODE_ENV === 'development'
 
@@ -29,11 +28,11 @@ export default function Login({ loggedIn, setLoggedIn }) {
     if (hash(pass) !== correctHash && loggedIn) setLoggedIn(false)
   }, [pass, loggedIn, setLoggedIn])
 
-  if (loggedIn) return <Typography>Trainer Obivan Kenobi</Typography>
+  if (loggedIn) return <Button color="inherit">Trainer Obivan Kenobi</Button>
 
   return (
     <Button
-      variant="contained"
+      color="inherit"
       onClick={() => {
         const newPass = prompt('Enter rebel code')
         if (hash(newPass) === correctHash) alert('Welcome back, obivan')
